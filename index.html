@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tshireletso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+ <header class="top">
+  <a class="brand" href="#home">Tshireletso</a>
+  <nav aria-label="Pages"><a href="#home">Home</a><a href="#trail">Trail</a><a href="#lab">Lab</a><a href="#learn">How it works</a></nav>
+ </header>
+
+ <section class="page" id="p-home">
+  <h1>Tshireletso</h1>
+  <p class="lead">Systems defend themselves with strong passwords, lockouts and shutdowns. Learn how, then solve a cyber case of your own.</p>
+  <div class="cards">
+   <a href="#trail"><h2>The Trail</h2><p>A six-day cyber case. Crack a phone, spot phishing, decode a note, catch a liar, break into a server.</p></a>
+   <a href="#lab"><h2>The Lab</h2><p>Sign in to a live-feeling server terminal. Create a password and watch the gate fight back.</p></a>
+   <a href="#learn"><h2>How it works</h2><p>Hashing, salting, lockouts and shutdown in plain words.</p></a>
+  </div>
+ </section>
+
+ <div class="page" id="p-trail" hidden>
+  <ol class="map" id="map" aria-label="Case progress"></ol>
+  <div class="g2">
+   <section class="panel" aria-labelledby="s-title">
+    <p class="kicker" id="s-kick"></p>
+    <h2 id="s-title"></h2>
+    <div id="s-story"></div>
+    <div class="meter" id="s-meter" role="img" aria-label="Wrong codes so far"></div>
+    <div class="play" id="s-play"></div>
+    <p class="status" id="s-status" role="status"></p>
+    <div class="row"><button id="s-hint" class="alt" type="button"></button><button id="s-next" type="button" hidden>Next day</button></div>
+   </section>
+   <section class="panel"><h2>Evidence</h2><ul class="chips" id="ev"></ul><p class="note" id="s-score"></p></section>
+  </div>
+ </div>
+
+ <div class="page" id="p-lab" hidden>
+  <div class="term" id="term">
+   <div class="tbar"><span>ssh admin@10.0.4.17</span><span id="t-fail">failed 0/9</span></div>
+   <div class="tbody" id="t-out" role="log" aria-live="polite"></div>
+   <label class="tin"><span id="t-ps"></span><input id="t-cmd" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input"></label>
+  </div>
+  <p class="note">A simulated server for learning. Try: help, genpass, login, attack, fast.</p>
+ </div>
+
+ <div class="page learn" id="p-learn" hidden>
+  <section class="panel">
+   <h2>What the gate does</h2>
+   <ol>
+    <li>It builds a password with the browser’s secure random generator.</li>
+    <li>It keeps only a salted PBKDF2 hash, never the password itself.</li>
+    <li>Each login guess is hashed the same way and compared with the stored hash.</li>
+    <li>Failures are logged. Every 3rd one locks the gate, and the 9th halts the system.</li>
+   </ol>
+   <h2>Why it works</h2>
+   <p>A computer can try thousands of guesses a second. Lockouts cut that to a handful a minute, so a quick attack becomes one that takes years.</p>
+   <h2>Where it falls short</h2>
+   <p>Halting everything lets anyone take the system offline by failing on purpose. Real systems lock one account, add delays and alert the owner. This demo also counts failures in your browser, where a real gate would count them on a server.</p>
+   <h2>What the Trail teaches</h2>
+   <p>Check the sender’s domain, distrust urgency, never give a password by email, and never use a birthday as a passcode. Test only systems you have written permission to test.</p>
+  </section>
+ </div>
+</main>
+
+<div class="off" id="off" role="alertdialog" aria-modal="true" aria-labelledby="off-t">
+ <div><div class="bar"></div><h2 id="off-t">Device wiped</h2><p id="off-p"></p><button id="off-b" type="button">Try this day again</button></div>
+</div>
+
+<script src="core.js"></script>
+<script src="trail.js"></script>
+<script src="lab.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

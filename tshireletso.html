@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tshireletso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#eef3f8;--surface:#fff;--ink:#12202e;--muted:#566677;--line:#cbd8e4;--track:#dbe6f0;
+ --accent:#2a74b5;--accent-ink:#fff;--danger:#c4352f;--ok:#17805a;
+ --tbg:#07101a;--tbar:#0d1b2a;--tfg:#cfe3f5;--tbad:#ff7b72;--tok:#4fd1a0;--twarn:#e3b341;
+ --sans:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0c1722;--surface:#132333;--ink:#e8f0f7;--muted:#8fa3b6;--line:#25384b;--track:#1d3145;
+ --accent:#75aadb;--accent-ink:#0c1722;--danger:#ff6b63;--ok:#4fd1a0;color-scheme:dark}}
+:root[data-theme="dark"]{
+ --bg:#0c1722;--surface:#132333;--ink:#e8f0f7;--muted:#8fa3b6;--line:#25384b;--track:#1d3145;
+ --accent:#75aadb;--accent-ink:#0c1722;--danger:#ff6b63;--ok:#4fd1a0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5}
+main{max-width:980px;margin:0 auto;padding:30px 20px 48px}
+h1{font-size:clamp(2.4rem,8vw,4rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0 0 10px}
+h2{font-size:1.15rem;font-weight:600;margin:0 0 14px}
+.lead{color:var(--muted);max-width:58ch;margin:0 0 26px;font-size:1.05rem}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 28px}
+.brand{font-weight:800;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.top nav{display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{padding:8px 14px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem}
+.top nav a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+.cards{display:grid;gap:16px}
+@media(min-width:780px){.cards{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1.6fr 1fr}}
+.cards a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;color:var(--ink);text-decoration:none}
+.cards a:hover{border-color:var(--accent)}
+.cards h2{margin:0 0 8px}.cards p{margin:0;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.g2{display:grid;gap:20px}
+.note{color:var(--muted);font-size:.9rem;margin:12px 0 0}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled,input:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.map{list-style:none;display:flex;margin:0 0 22px;padding:0}
+.map li{flex:1;text-align:center;font-size:.8rem;color:var(--muted);position:relative}
+.map li::before{content:"";display:block;width:26px;height:26px;margin:0 auto 6px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+.map li::after{content:"";position:absolute;top:12px;left:calc(50% + 17px);right:calc(-50% + 17px);height:2px;background:var(--line)}
+.map li:last-child::after{display:none}
+.map li.done::before{background:var(--ok);border-color:var(--ok)}.map li.done::after{background:var(--ok)}
+.map li.now::before{background:var(--accent);border-color:var(--accent)}.map li.now{color:var(--ink);font-weight:600}
+.kicker{color:var(--accent);font-weight:600;font-size:.9rem;margin:0 0 4px}
+.msg{border-left:3px solid var(--accent);padding:2px 0 2px 12px;margin:0 0 12px}
+.msg b{display:block;font-size:.85rem;color:var(--muted)}
+.play form{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+.play form>div{flex:1 1 100%}
+.play input[type=text]{flex:1;min-width:160px;font:inherit;font-family:var(--mono);font-size:1.1rem;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin:0 0 8px;cursor:pointer}
+.opt input{margin-top:5px;accent-color:var(--accent)}
+.who{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.status{min-height:1.5em;margin:12px 0 0;font-weight:600}.bad{color:var(--danger)}.ok{color:var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.chips{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.chips li{padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.chips:empty::before{content:"Nothing yet. Solve a day to collect evidence.";color:var(--muted);font-size:.92rem}
+.meter{display:flex;gap:14px;margin:14px 0 4px}
+.meter div{display:flex;gap:4px;flex:1}
+.meter i{flex:1;height:12px;border-radius:3px;background:var(--track)}.meter i.x{background:var(--danger)}
+.glog{list-style:none;margin:14px 0 0;padding:0;font-family:var(--mono)}
+.glog li{display:flex;align-items:center;gap:14px;padding:8px 0;border-top:1px solid var(--line);letter-spacing:.2em}
+.glog small{margin-left:auto;font-family:var(--sans);letter-spacing:0;color:var(--muted);font-size:.85rem}
+.pegs{display:flex;gap:5px}.pg{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent)}.pg.e{background:var(--accent)}
+.term{background:var(--tbg);color:var(--tfg);border:1px solid var(--line);border-radius:14px;font-family:var(--mono);font-size:.9rem;overflow:hidden}
+.term:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.tbar{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--tbar);color:#8fa3b6;font-size:.8rem}
+.tbody{padding:14px 14px 4px;height:min(58vh,480px);overflow-y:auto}
+.tl{white-space:pre-wrap;word-break:break-word;min-height:1.45em}
+.tl.bad{color:var(--tbad)}.tl.ok{color:var(--tok)}.tl.warn{color:var(--twarn)}
+.tin{display:flex;padding:4px 14px 14px;margin:0;font-weight:400}
+.tin span{white-space:pre;color:#75aadb}
+.tin input{flex:1;min-width:0;background:transparent;border:0;color:inherit;font:inherit;padding:0;outline:0}
+.learn p,.learn li{max-width:62ch}.learn ol{margin:0 0 22px;padding-left:20px}.learn p{margin:0 0 22px}
+.off{position:fixed;inset:0;z-index:10;background:#000;color:#fff;display:grid;place-items:center;text-align:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .9s,visibility .9s}
+.off.on{opacity:1;visibility:visible}
+.off h2{font-size:clamp(1.8rem,6vw,3rem);font-weight:800;margin:0 0 10px}
+.off p{max-width:44ch;margin:0 auto 24px;color:#b8c7d6}
+.off .bar{width:min(320px,70vw);height:3px;background:#75aadb;margin:0 auto 28px}
+.off button{background:#75aadb;color:#0c1722}
+@media(prefers-reduced-motion:reduce){.off{transition:none}}
+</style>
+</head>
+<body>
+<main>
+ <header class="top">
+  <a class="brand" href="#home">Tshireletso</a>
+  <nav aria-label="Pages"><a href="#home">Home</a><a href="#trail">Trail</a><a href="#lab">Lab</a><a href="#learn">How it works</a></nav>
+ </header>
+
+ <section class="page" id="p-home">
+  <h1>Tshireletso</h1>
+  <p class="lead">Systems defend themselves with strong passwords, lockouts and shutdowns. Learn how, then solve a cyber case of your own.</p>
+  <div class="cards">
+   <a href="#trail"><h2>The Trail</h2><p>A six-day cyber case. Crack a phone, spot phishing, decode a note, catch a liar, break into a server.</p></a>
+   <a href="#lab"><h2>The Lab</h2><p>Sign in to a live-feeling server terminal. Create a password and watch the gate fight back.</p></a>
+   <a href="#learn"><h2>How it works</h2><p>Hashing, salting, lockouts and shutdown in plain words.</p></a>
+  </div>
+ </section>
+
+ <div class="page" id="p-trail" hidden>
+  <ol class="map" id="map" aria-label="Case progress"></ol>
+  <div class="g2">
+   <section class="panel" aria-labelledby="s-title">
+    <p class="kicker" id="s-kick"></p>
+    <h2 id="s-title"></h2>
+    <div id="s-story"></div>
+    <div class="meter" id="s-meter" role="img" aria-label="Wrong codes so far"></div>
+    <div class="play" id="s-play"></div>
+    <p class="status" id="s-status" role="status"></p>
+    <div class="row"><button id="s-hint" class="alt" type="button"></button><button id="s-next" type="button" hidden>Next day</button></div>
+   </section>
+   <section class="panel"><h2>Evidence</h2><ul class="chips" id="ev"></ul><p class="note" id="s-score"></p></section>
+  </div>
+ </div>
+
+ <div class="page" id="p-lab" hidden>
+  <div class="term" id="term">
+   <div class="tbar"><span>ssh admin@10.0.4.17</span><span id="t-fail">failed 0/9</span></div>
+   <div class="tbody" id="t-out" role="log" aria-live="polite"></div>
+   <label class="tin"><span id="t-ps"></span><input id="t-cmd" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input"></label>
+  </div>
+  <p class="note">A simulated server for learning. Try: help, genpass, login, attack, fast.</p>
+ </div>
+
+ <div class="page learn" id="p-learn" hidden>
+  <section class="panel">
+   <h2>What the gate does</h2>
+   <ol>
+    <li>It builds a password with the browser’s secure random generator.</li>
+    <li>It keeps only a salted PBKDF2 hash, never the password itself.</li>
+    <li>Each login guess is hashed the same way and compared with the stored hash.</li>
+    <li>Failures are logged. Every 3rd one locks the gate, and the 9th halts the system.</li>
+   </ol>
+   <h2>Why it works</h2>
+   <p>A computer can try thousands of guesses a second. Lockouts cut that to a handful a minute, so a quick attack becomes one that takes years.</p>
+   <h2>Where it falls short</h2>
+   <p>Halting everything lets anyone take the system offline by failing on purpose. Real systems lock one account, add delays and alert the owner. This demo also counts failures in your browser, where a real gate would count them on a server.</p>
+   <h2>What the Trail teaches</h2>
+   <p>Check the sender’s domain, distrust urgency, never give a password by email, and never use a birthday as a passcode. Test only systems you have written permission to test.</p>
+  </section>
+ </div>
+</main>
+
+<div class="off" id="off" role="alertdialog" aria-modal="true" aria-labelledby="off-t">
+ <div><div class="bar"></div><h2 id="off-t">Device wiped</h2><p id="off-p"></p><button id="off-b" type="button">Try this day again</button></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id),el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+const enc=new TextEncoder(),sleep=ms=>new Promise(r=>setTimeout(r,ms)),gl=n=>n+(n===1?" guess":" guesses");
+function rnd(n){const lim=Math.floor(4294967296/n)*n,a=new Uint32Array(1);do{crypto.getRandomValues(a);}while(a[0]>=lim);return a[0]%n;}
+function makePassword(len){const S=["abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ","0123456789","!@#$%^&*()-_=+[]{};:,.<>?/~"],all=S.join(""),o=S.map(s=>s[rnd(s.length)]);
+ while(o.length<len)o.push(all[rnd(all.length)]);for(let i=o.length-1;i>0;i--){const j=rnd(i+1);[o[i],o[j]]=[o[j],o[i]];}return o.join("");}
+async function hash(pw,s){const k=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
+ return new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2",salt:s,iterations:200000,hash:"SHA-256"},k,256));}
+function same(a,b){let d=0;for(let i=0;i<a.length;i++)d|=a[i]^b[i];return d===0;}
+
+/* ---------- THE TRAIL ---------- */
+const STOPS=[
+{k:"Phone",day:"Day 1",t:"The found phone",type:"pin",ans:"1403",
+ story:[["Case file","Friday’s term marks leaked online before release. Thuto Prep School hired you to find out who did it."],["Taxi rank","A driver hands in a phone. The lock screen says NEO DUBE. A sticky note reads: “Birthday, day then month.” His student card says he was born on 14 March 2008."]],
+ hint:"Day first, then month: 14 and 03.",ev:"Neo’s phone: on Friday he chatted with “IT Desk”."},
+{k:"Email",day:"Day 2",t:"The email",type:"pick",n:3,right:[0,2,4],ok:"Phishing spotted.",
+ story:[["Neo’s inbox","The school’s real email addresses end in thuto-prep.ac.bw. One unread message looks wrong. Tick its 3 red flags."]],
+ opts:["Sender: it-desk@thuto-prep-support.co","“Dear student,”","“Your account closes in 2 hours unless you act now.”","“Term 3 marks portal maintenance tonight.”","“Reply with your password to confirm.”","“Kind regards, IT Desk”"],
+ hint:"Check the sender’s domain, the pressure, and what it asks for.",ev:"A look-alike email tricked Neo into sharing his password."},
+{k:"Cipher",day:"Day 3",t:"The locker note",type:"cipher",ans:"MEETMEATTHELIBRARYATFIVE",
+ story:[["Locker 27","A folded note in Neo’s locker: PHHW PH DW WKH OLEUDUB DW ILYH"],["Colleague","Old ciphers move every letter along the alphabet by the same number."]],
+ hint:"Shift each letter back by 3: D becomes A.",ev:"Note: someone asked to meet Neo at the library at five."},
+{k:"Alibis",day:"Day 4",t:"Who is lying?",type:"pick",n:2,right:[0,2],ok:"Contradiction found.",
+ story:[["Interviews and logs","Two of these cannot both be true. Tick them."]],
+ opts:["Ms Lerato, clerk: “I was home all Friday evening.”","Mr Kgosi, IT teacher: “I marked papers in my classroom until six.”","Library visitor book: “Friday 17:05, L. Lerato signed in.”","Server log: “Friday 17:12, admin login, staff room PC.”","Neo: “I had football practice until six.”"],
+ hint:"Look for a statement that a record disproves.",ev:"Ms Lerato said she was home, but the library book shows her at 17:05."},
+{k:"Server",day:"Day 5",t:"The staff room PC",type:"vault",ok:"Server unlocked.",
+ story:[["Staff room PC","The log points here. Its admin screen wants a 4-character code, A to F. A filled dot means the right character in the right place, a hollow dot the right character in the wrong place. Nine wrong codes wipe the logs."]],
+ ev:"Server log: at 17:14 the marks were exported from the clerk’s account."},
+{k:"Verdict",day:"Day 6",t:"Name the culprit",type:"accuse",right:2,who:["Neo Dube","Mr Kgosi","Ms Lerato"],
+ story:[["Case review","Review your evidence, then name who leaked the marks."]],
+ hint:"Who lied about Friday, and whose account exported the marks?",
+ end:"Ms Lerato phished a student, lied about her alibi and exported the marks from her own account."}
+];
+const S={i:0,score:0,pen:0,hints:0,ev:[],done:false,tries:0,until:0,code:"",rev:[],t:null};
+const rank=s=>s>=520?"Cyber sleuth":s>=400?"Lead investigator":s>=250?"Forensic analyst":"Trainee analyst";
+const pts=()=>Math.max(10,100-S.pen);
+function say(m,c){const s=$("s-status");s.textContent=m;s.className="status "+(c||"");}
+function lockPlay(on){$("s-play").querySelectorAll("input,button").forEach(b=>b.disabled=on);}
+function pips(){[...$("s-meter").querySelectorAll("i")].forEach((p,i)=>p.classList.toggle("x",i<S.tries));}
+function map(){const m=$("map");m.textContent="";STOPS.forEach((s,i)=>{const li=el("li",i<S.i||(i===S.i&&S.done)?"done":i===S.i?"now":"",s.k);m.append(li);});}
+function evs(){const u=$("ev");u.textContent="";S.ev.forEach(x=>u.append(el("li","",x)));$("s-score").textContent="Score "+S.score+". Rank: "+rank(S.score)+".";}
+function feed(g,c){let x=0,k=0;const a=[],b=[];for(let i=0;i<c.length;i++){if(g[i]===c[i])x++;else{a.push(g[i]);b.push(c[i]);}}
+ a.forEach(ch=>{const j=b.indexOf(ch);if(j>-1){k++;b.splice(j,1);}});return [x,k];}
+function row(list,v,x,k){const li=el("li"),p=el("span","pegs");for(let i=0;i<x+k;i++)p.append(el("i","pg"+(i<x?" e":"")));
+ li.append(el("span","",v),p,el("small","",x+" in place, "+k+" close"));list.append(li);}
+function tick(){clearInterval(S.t);const step=()=>{const l=Math.ceil((S.until-Date.now())/1000);
+ if(l>0){lockPlay(true);say("Device locked. Try again in "+l+" s.","bad");}
+ else{clearInterval(S.t);lockPlay(false);say(gl(9-S.tries)+" left before the device wipes itself.","");}};step();S.t=setInterval(step,250);}
+function wrongGuess(){S.tries++;S.pen+=10;pips();
+ if(S.tries>=9){fail();return;}
+ if(S.tries%3===0){S.until=Date.now()+S.tries/3*4000;tick();}
+ else say(gl(9-S.tries)+" left before the device wipes itself.","bad");}
+function fail(){S.done=true;clearInterval(S.t);lockPlay(true);S.score=Math.max(0,S.score-50);evs();
+ $("off-p").textContent="Nine wrong codes. The device wiped itself and you lose 50 points. Try this day again.";
+ $("off").classList.add("on");$("off-b").focus();}
+function win(msg){S.done=true;clearInterval(S.t);const p=pts(),s=STOPS[S.i];S.score+=p;if(s.ev)S.ev.push(s.ev);
+ say(msg+" +"+p+" points.","ok");lockPlay(true);map();evs();$("s-hint").hidden=true;
+ const n=$("s-next");n.hidden=false;n.textContent=S.i<STOPS.length-1?"Go to next day":"Play again";n.focus();}
+const P={
+ pin(s){const f=el("form"),i=el("input");i.type="text";i.inputMode="numeric";i.maxLength=4;i.placeholder="4-digit passcode";i.setAttribute("aria-label","Passcode");
+  const b=el("button","","Unlock");b.type="submit";f.append(i,b);
+  f.onsubmit=e=>{e.preventDefault();if(S.done||Date.now()<S.until)return;const v=i.value.trim();
+   if(!/^\d{4}$/.test(v)){say("Enter exactly 4 digits.","bad");return;}i.value="";if(v===s.ans)win("Phone unlocked.");else wrongGuess();};
+  $("s-play").replaceChildren(f);},
+ pick(s){const f=el("form"),box=el("div");
+  s.opts.forEach((o,k)=>{const l=el("label","opt"),c=el("input");c.type="checkbox";c.value=k;l.append(c,el("span","",o));box.append(l);});
+  const b=el("button","","Check evidence");b.type="submit";f.append(box,b);
+  f.onsubmit=e=>{e.preventDefault();if(S.done)return;const got=[...f.querySelectorAll("input:checked")].map(c=>+c.value);
+   if(got.length!==s.n){say("Pick exactly "+s.n+".","bad");return;}
+   const hit=got.filter(k=>s.right.includes(k)).length;
+   if(hit===s.n)win(s.ok);else{S.pen+=20;say(hit+" of "+s.n+" are right. Look again.","bad");}};
+  $("s-play").replaceChildren(f);},
+ cipher(s){const f=el("form"),i=el("input");i.type="text";i.placeholder="Type the decoded message";i.setAttribute("aria-label","Decoded message");
+  const b=el("button","","Decode");b.type="submit";f.append(i,b);
+  f.onsubmit=e=>{e.preventDefault();if(S.done)return;
+   if(i.value.toUpperCase().replace(/[^A-Z]/g,"")===s.ans)win("Message decoded.");else{S.pen+=20;say("Not yet. Check your shift.","bad");}};
+  $("s-play").replaceChildren(f);},
+ vault(s){S.code=Array.from({length:4},()=>"ABCDEF"[rnd(6)]).join("");
+  const f=el("form"),i=el("input"),lg=el("ol","glog");i.type="text";i.maxLength=4;i.placeholder="4 characters, A to F";i.setAttribute("aria-label","Admin code");
+  const b=el("button","","Try code");b.type="submit";f.append(i,b);
+  f.onsubmit=e=>{e.preventDefault();if(S.done||Date.now()<S.until)return;const v=i.value.toUpperCase();
+   if(!/^[A-F]{4}$/.test(v)){say("Enter 4 characters from A to F.","bad");return;}i.value="";
+   const [x,k]=feed(v,S.code);row(lg,v,x,k);if(x===4)win(s.ok);else wrongGuess();};
+  $("s-play").replaceChildren(f,lg);},
+ accuse(s){const w=el("div","who");
+  s.who.forEach((n,k)=>{const b=el("button","alt",n);b.type="button";b.onclick=()=>{if(S.done)return;
+   if(k===s.right)win("Case closed. "+s.end+" Final rank: "+rank(S.score+pts())+".");else{S.pen+=30;say("That does not fit the evidence. Review it and try again.","bad");}};w.append(b);});
+  $("s-play").replaceChildren(w);}
+};
+function show(){const s=STOPS[S.i];S.pen=0;S.hints=0;S.tries=0;S.until=0;S.done=false;S.rev=[];clearInterval(S.t);
+ $("s-kick").textContent=s.day+" · "+s.k;$("s-title").textContent=s.t;
+ const st=$("s-story");st.textContent="";s.story.forEach(([w,x])=>{const m=el("div","msg");m.append(el("b","",w),el("span","",x));st.append(m);});
+ $("s-meter").hidden=!(s.type==="pin"||s.type==="vault");pips();
+ $("s-next").hidden=true;const h=$("s-hint");h.hidden=false;h.disabled=false;h.textContent=s.type==="vault"?"Reveal a character (-30)":"Hint (-30)";
+ say("","");P[s.type](s);map();evs();}
+$("s-hint").onclick=()=>{const s=STOPS[S.i],max=s.type==="vault"?2:1;if(S.done||S.hints>=max)return;
+ S.hints++;S.pen+=30;
+ if(s.type==="vault"){let p;do{p=rnd(4);}while(S.rev.includes(p));S.rev.push(p);say("Revealed: "+S.rev.map(p=>"position "+(p+1)+" is "+S.code[p]).join(", ")+".","");}
+ else say("Hint: "+s.hint,"");
+ if(S.hints>=max)$("s-hint").disabled=true;};
+$("s-next").onclick=()=>{if(S.i<STOPS.length-1)S.i++;else{S.i=0;S.score=0;S.ev=[];}show();};
+$("off-b").onclick=()=>{$("off").classList.remove("on");show();};
+for(let g=0;g<3;g++){const d=el("div");for(let i=0;i<3;i++)d.append(el("i"));$("s-meter").append(d);}
+show();
+
+/* ---------- THE LAB (terminal) ---------- */
+const T={mode:"guest",salt:null,hash:null,fails:0,first:30,lockSec:30,until:0,hist:[],hi:0,log:[],booted:false,stop:false};
+const out=$("t-out"),cmd=$("t-cmd"),ps=$("t-ps");
+const BOOT=["TSH-GATE 2.1 · secure access node gab-srv-01","Connecting to 10.0.4.17 ... connected","Authorised users only. Every failed login is logged.","No admin credential on file. Type genpass 16, then login. Type help for commands."];
+const HELP={guest:"genpass [8-32]  create the admin credential\nlogin           sign in as admin\nattack          brute-force the gate\nfast            toggle 5 s lockouts\nstatus, clear",shell:"ls, cat <file>, whoami, logs, status, genpass, logout, clear",halted:"reboot"};
+const FILES={"readme.md":"Gate node gab-srv-01. Rotate the admin credential every 90 days.","notes.txt":"Nine failed logins halt the node. Lockouts double: 30 s, then 60 s."};
+function pr(x,c){out.append(el("div","tl"+(c?" "+c:""),x));out.scrollTop=out.scrollHeight;}
+function pp(){ps.textContent={shell:"admin@gate:~# ",pass:"Password: ",halted:"halt# ",guest:"guest@gate:~$ "}[T.mode];cmd.type=T.mode==="pass"?"password":"text";}
+function bar(){$("t-fail").textContent="failed "+T.fails+"/9"+(Date.now()<T.until?" · locked":"")+(T.mode==="halted"?" · halted":"");}
+async function boot(lines){const d=matchMedia("(prefers-reduced-motion:reduce)").matches?0:200;cmd.disabled=true;
+ for(const l of lines){pr(l);await sleep(d);}cmd.disabled=false;pp();cmd.focus();}
+function failLogin(){T.fails++;T.log.push(new Date().toLocaleTimeString()+"  FAILED login for admin from 10.0.4.2 (#"+T.fails+")");pr("Authentication failure.","bad");
+ if(T.fails>=9){T.mode="halted";T.log.push("HALT: intrusion threshold reached");
+  pr("KERNEL: intrusion threshold reached (9 failed logins)","bad");pr("KERNEL: stopping services ...","bad");pr("System halted. Type reboot to restart the node.","bad");}
+ else if(T.fails%3===0){T.until=Date.now()+T.lockSec*1000;pr("Too many failures. Login disabled for "+T.lockSec+" s.","bad");T.lockSec*=2;}
+ else pr((3-T.fails%3)+" more before lockout.","bad");bar();}
+async function attack(){
+ if(!T.hash){pr("No credential on file. Run genpass first.","bad");return;}
+ const W=["123456","password","qwerty","admin","letmein","welcome","iloveyou","monkey","dragon","password123","12345678","abc123","gaborone","botswana1"];
+ T.stop=false;let sent=0,blk=0,i=0;pr("[attack] brute force started. Press Ctrl+C to stop. Tip: run fast first.","warn");
+ while(T.mode!=="halted"&&!T.stop){
+  if(Date.now()<T.until){sent++;blk++;await sleep(200);continue;}
+  const g=i<W.length?W[i]:Math.random().toString(36).slice(2,11);i++;sent++;pr("[attack] trying "+g);
+  if(same(await hash(g,T.salt),T.hash)){pr("[attack] password found: "+g,"ok");break;}
+  failLogin();await sleep(150);}
+ pr("[attack] ended. "+sent+" guesses sent, "+blk+" blocked by lockouts.","warn");}
+async function run(line){const [c,a]=line.split(/\s+/);
+ if(T.mode==="halted"){if(c==="reboot"){T.mode="guest";T.fails=0;T.until=0;T.lockSec=T.first;bar();await boot(["Rebooting ...","Node back online. The credential was kept. Type login."]);}else if(c)pr("System halted. Type reboot.","bad");return;}
+ if(c==="")return;
+ if(c==="help"){pr(HELP[T.mode]);return;}
+ if(c==="clear"){out.textContent="";return;}
+ if(c==="status"){pr("failed logins: "+T.fails+"/9\nlockout: "+(Date.now()<T.until?Math.ceil((T.until-Date.now())/1000)+" s left":"none")+"\ncredential: "+(T.hash?"set":"not set"));return;}
+ if(c==="genpass"){const pw=makePassword(Math.min(32,Math.max(8,+a||16)));T.salt=crypto.getRandomValues(new Uint8Array(16));T.hash=await hash(pw,T.salt);
+  T.fails=0;T.until=0;T.lockSec=T.first;bar();pr("New admin password: "+pw,"ok");pr("Only a salted hash is stored. Type login to sign in.");return;}
+ if(c==="fast"){T.first=T.first===30?5:30;T.lockSec=T.first;pr("Lockouts are now "+T.first+" s, then "+T.first*2+" s.");return;}
+ if(T.mode==="guest"){
+  if(c==="login"){if(!T.hash){pr("No credential on file. Run genpass first.","bad");return;}
+   const l=Math.ceil((T.until-Date.now())/1000);if(l>0){pr("Login disabled for "+l+" s.","bad");return;}T.mode="pass";pr("Login: admin");}
+  else if(c==="attack")await attack();
+  else pr("command not found: "+c+" (try help)","bad");return;}
+ if(c==="ls")pr("readme.md  notes.txt  students.db  auth.log");
+ else if(c==="whoami")pr("admin");
+ else if(c==="logs"||(c==="cat"&&a==="auth.log"))pr(T.log.length?T.log.join("\n"):"(no failed logins on record)");
+ else if(c==="cat"&&FILES[a])pr(FILES[a]);
+ else if(c==="cat"&&a==="students.db")pr("Permission denied: audit-only file. This session is recorded.","bad");
+ else if(c==="cat")pr("cat: "+(a||"missing file")+": no such file","bad");
+ else if(c==="logout"){T.mode="guest";pr("Connection closed. Type login to sign in again.");}
+ else pr("command not found: "+c,"bad");}
+cmd.onkeydown=async e=>{
+ if(e.key==="ArrowUp"&&T.hist.length){T.hi=Math.max(0,T.hi-1);cmd.value=T.hist[T.hi]||"";e.preventDefault();return;}
+ if(e.key!=="Enter")return;const v=cmd.value;cmd.value="";cmd.disabled=true;
+ if(T.mode==="pass"){pr("Password: "+"•".repeat(v.length));T.mode="guest";
+  if(same(await hash(v,T.salt),T.hash)){T.fails=0;T.until=0;T.lockSec=T.first;T.mode="shell";bar();
+   pr("Authentication successful.","ok");pr("Last login: "+new Date().toDateString()+" from 10.0.4.2");pr("Welcome, admin. Type help.");}
+  else failLogin();
+ }else{pr(ps.textContent+v);if(v.trim()){T.hist.push(v);T.hi=T.hist.length;}await run(v.trim());}
+ cmd.disabled=false;pp();cmd.focus();};
+addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="c")T.stop=true;});
+$("term").onclick=()=>{if(!cmd.disabled)cmd.focus();};
+setInterval(bar,500);
+
+/* ---------- ROUTING ---------- */
+const PAGES=["home","trail","lab","learn"],NAMES={home:"home",trail:"the trail",lab:"the lab",learn:"how it works"};
+function route(){const h=(location.hash||"#home").slice(1),p=PAGES.includes(h)?h:"home";
+ PAGES.forEach(n=>{$("p-"+n).hidden=n!==p;});
+ document.querySelectorAll(".top nav a").forEach(a=>{if(a.hash==="#"+p)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+ document.title="Tshireletso: "+NAMES[p];window.scrollTo(0,0);
+ if(p==="lab"){if(!T.booted){T.booted=true;boot(BOOT);}else cmd.focus();}}
+addEventListener("hashchange",route);route();
+if(!(window.crypto&&crypto.subtle)){pr("Secure hashing is blocked on plain http pages. Open this site over https, or open the file directly.","bad");}
+</script>
+</body>
+</html>
