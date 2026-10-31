@@ -1,0 +1,83 @@
+:root{
+ --bg:#eef3f8;--surface:#fff;--ink:#12202e;--muted:#566677;--line:#cbd8e4;--track:#dbe6f0;
+ --accent:#2a74b5;--accent-ink:#fff;--danger:#c4352f;--ok:#17805a;
+ --sans:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0c1722;--surface:#132333;--ink:#e8f0f7;--muted:#8fa3b6;--line:#25384b;--track:#1d3145;
+ --accent:#75aadb;--accent-ink:#0c1722;--danger:#ff6b63;--ok:#4fd1a0;color-scheme:dark}}
+:root[data-theme="dark"]{
+ --bg:#0c1722;--surface:#132333;--ink:#e8f0f7;--muted:#8fa3b6;--line:#25384b;--track:#1d3145;
+ --accent:#75aadb;--accent-ink:#0c1722;--danger:#ff6b63;--ok:#4fd1a0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5}
+main{max-width:960px;margin:0 auto;padding:36px 20px 48px}
+h1{font-size:clamp(2.4rem,8vw,4rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0 0 10px}
+.lead{color:var(--muted);max-width:56ch;margin:0 0 28px;font-size:1.05rem}
+.grid{display:grid;gap:20px}
+@media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+h2{font-size:1.15rem;font-weight:600;margin:0 0 16px}
+label{display:flex;justify-content:space-between;font-weight:600;font-size:.95rem;margin-bottom:6px}
+output{font-family:var(--mono);color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent);margin:0 0 14px}
+.check{justify-content:flex-start;gap:10px;font-weight:400;margin:0 0 18px}
+input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;margin:0}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled,input:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pw{font-family:var(--mono);font-size:1.15rem;font-weight:600;word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;min-height:56px;margin:18px 0 12px}
+.pw:empty::before{content:"Your password appears here";color:var(--muted);font-weight:400}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.note{color:var(--muted);font-size:.9rem;margin:14px 0 0}
+input[type=password]{width:100%;font:inherit;font-family:var(--mono);padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:12px}
+.meter{display:flex;gap:14px;margin:20px 0 6px}
+.meter div{display:flex;gap:4px;flex:1}
+.meter i{flex:1;height:14px;border-radius:3px;background:var(--track)}
+.meter i.x{background:var(--danger)}
+.status{min-height:1.5em;margin:12px 0 0;font-weight:600}
+.bad{color:var(--danger)}.ok{color:var(--ok)}
+.log{list-style:none;margin:10px 0 0;padding:0;max-height:170px;overflow-y:auto;font-family:var(--mono);font-size:.82rem}
+.log li{padding:6px 0;border-top:1px solid var(--line);display:flex;gap:12px}
+.log time{color:var(--muted)}
+.log:empty::before{content:"No failed logins yet.";color:var(--muted);font-family:var(--sans);font-size:.9rem}
+.attack{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.attack .check{margin:12px 0 0}
+.game{margin-bottom:20px}
+.game form{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+.game input[type=text]{flex:1;min-width:160px;font:inherit;font-family:var(--mono);font-size:1.1rem;letter-spacing:.2em;text-transform:uppercase;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.gline{margin:0 0 4px;font-weight:600}
+.glog{list-style:none;margin:14px 0 0;padding:0;font-family:var(--mono)}
+.glog li{display:flex;align-items:center;gap:14px;padding:8px 0;border-top:1px solid var(--line);letter-spacing:.2em}
+.glog small{margin-left:auto;font-family:var(--sans);letter-spacing:0;color:var(--muted);font-size:.85rem}
+.pegs{display:flex;gap:5px}
+.pg{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent)}
+.pg.e{background:var(--accent)}
+.meter i.w{background:var(--ok)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 28px}
+.brand{font-weight:800;font-size:1.2rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.top nav{display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{padding:8px 14px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem}
+.top nav a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+.cards{display:grid;gap:16px;margin-top:8px}
+@media(min-width:780px){.cards{grid-template-columns:repeat(3,1fr)}}
+.cards a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;color:var(--ink);text-decoration:none}
+.cards a:hover{border-color:var(--accent)}
+.cards h2{margin:0 0 8px}.cards p{margin:0;color:var(--muted)}
+.learn ol{margin:0 0 24px;padding-left:20px}.learn li{margin:0 0 8px}
+.learn p{margin:0 0 24px;max-width:62ch}
+.board{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0 0 14px}
+.board li{padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:.88rem;color:var(--muted)}
+.board li.now{border-color:var(--accent);color:var(--ink);font-weight:600}
+.board li.done{color:var(--ok);border-color:var(--ok)}
+.off{position:fixed;inset:0;z-index:10;background:#000;color:#fff;display:grid;place-items:center;text-align:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .9s,visibility .9s}
+.off.on{opacity:1;visibility:visible}
+.off h2{font-size:clamp(1.8rem,6vw,3rem);font-weight:800;margin:0 0 10px}
+.off p{max-width:44ch;margin:0 auto 24px;color:#b8c7d6}
+.off .bar{width:min(320px,70vw);height:3px;background:#75aadb;margin:0 auto 28px}
+.off button{background:#75aadb;color:#0c1722}
+@media(prefers-reduced-motion:reduce){.off{transition:none}}

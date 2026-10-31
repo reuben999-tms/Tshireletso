@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tshireletso: password generator with lockout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+ <header class="top">
+  <a class="brand" href="#home">Tshireletso</a>
+  <nav aria-label="Pages"><a href="#home">Home</a><a href="#game">Game</a><a href="#lab">Lab</a><a href="#learn">How it works</a></nav>
+ </header>
+ <section class="page" id="p-home">
+  <h1>Tshireletso</h1>
+ <p class="lead">A password generator that fights back. Too many wrong guesses lock the gate, and then the whole system shuts down.</p>
+  <div class="cards">
+   <a href="#game"><h2>Crack the vault</h2><p>Six authorised test missions. Guess the code before the system shuts you out.</p></a>
+   <a href="#lab"><h2>The lab</h2><p>Generate a password, then try to break in or launch a brute-force attack.</p></a>
+   <a href="#learn"><h2>How it works</h2><p>Hashing, salting, lockouts and shutdown, explained in plain words.</p></a>
+  </div>
+ </section>
+ <div class="page" id="p-game" hidden>
+ <section class="panel game" aria-labelledby="h-game">
+  <h2 id="h-game">Crack the vault</h2>
+  <ul class="board" id="g-board" aria-label="Missions"></ul>
+  <p class="gline" id="g-info"></p>
+  <p id="g-story" style="margin:0 0 10px"></p>
+  <p class="note" style="margin:0 0 4px" id="g-score"></p>
+  <p class="note" style="margin:0">You are the attacker. After each guess, a filled dot means a right character in the right place. A hollow dot means a right character in the wrong place. A lockout follows your 3rd and 6th wrong guess, and the 9th shuts the system down.</p>
+  <div class="meter" id="g-meter" role="img" aria-label="Guesses used"></div>
+  <form id="g-form" autocomplete="off">
+   <input id="g-guess" type="text" aria-label="Your guess" autocapitalize="characters" spellcheck="false">
+   <button id="g-go" type="submit">Hack</button>
+   <button id="g-hint" class="alt" type="button"></button>
+   <button id="g-next" type="button" hidden>Next level</button>
+  </form>
+  <p class="status" id="g-status" role="status"></p>
+  <p class="note" id="g-hintline" aria-live="polite" style="margin:6px 0 0"></p>
+  <ol class="glog" id="g-log" aria-label="Your guesses"></ol>
+ </section>
+ </div>
+ <div class="page" id="p-lab" hidden>
+ <div class="grid">
+  <section class="panel" aria-labelledby="h-gen">
+   <h2 id="h-gen">Generate a password</h2>
+   <label for="len">Length <output id="lenv">16</output></label>
+   <input id="len" type="range" min="8" max="32" value="16">
+   <label class="check"><input id="sym" type="checkbox" checked> Include symbols</label>
+   <button id="gen" type="button">Generate password</button>
+   <div class="pw" id="pw" aria-live="polite"></div>
+   <div class="row"><button id="copy" class="alt" type="button">Copy</button></div>
+   <p class="note">The new password is the only one the gate accepts. Only its salted hash is kept, never the text.</p>
+  </section>
+  <section class="panel" aria-labelledby="h-gate">
+   <h2 id="h-gate">Try to log in</h2>
+   <form id="form" autocomplete="off">
+    <input id="guess" type="password" placeholder="Enter the password" aria-label="Password" disabled>
+    <button id="go" type="submit" disabled>Log in</button>
+   </form>
+   <div class="meter" id="meter" role="img" aria-label="Failed attempts"></div>
+   <div class="note" id="count" style="margin:0"></div>
+   <p class="status" id="status" role="status">Generate a password first.</p>
+   <p class="note" id="rule"></p>
+   <div class="attack">
+    <button id="atk" class="alt" type="button" disabled>Launch brute-force attack</button>
+    <label class="check"><input id="fast" type="checkbox"> Fast demo (5 s lockouts)</label>
+    <p class="note" id="stats" aria-live="polite"></p>
+   </div>
+   <ol class="log" id="log" aria-label="Failed login log"></ol>
+  </section>
+ </div>
+ <p class="note">Demo running in your browser. Refreshing the page resets the counter.</p>
+ </div>
+ <div class="page learn" id="p-learn" hidden>
+  <section class="panel">
+   <h2>What the system does</h2>
+   <ol>
+    <li>It builds a password with the browser’s secure random generator.</li>
+    <li>It keeps only a salted PBKDF2 hash, never the password itself.</li>
+    <li>Each login guess is hashed the same way and compared with the stored hash.</li>
+    <li>Wrong guesses are logged. Every 3rd one locks the gate, and the 9th shuts the system down.</li>
+   </ol>
+   <h2>Why lockouts work</h2>
+   <p>A computer can try thousands of guesses a second, so a short or common password falls fast. A lockout cuts that to a handful of guesses a minute, which turns a quick attack into one that takes years.</p>
+   <h2>Where the idea has limits</h2>
+   <p>Shutting everything down is a blunt tool. Anyone can fail nine times on purpose and take the system offline, which is called a denial of service. Real systems usually lock one account, add delays, and alert the owner. This demo also counts failures in your browser, so a refresh resets it. A real gate keeps the count on a server.</p>
+   <h2>Test with permission</h2>
+   <p>Every mission in the game is an authorised test. In real security work you only test a system with written permission from its owner. Testing without permission is illegal, even when you mean no harm.</p>
+  </section>
+ </div>
+</main>
+
+<div class="off" id="off" role="alertdialog" aria-modal="true" aria-labelledby="off-t">
+ <div>
+  <div class="bar"></div>
+  <h2 id="off-t">System shut down</h2>
+  <p id="off-p"></p>
+  <button id="restart" type="button">Restart system</button>
+ </div>
+</div>
+
+<div class="off" id="goff" role="alertdialog" aria-modal="true" aria-labelledby="goff-t">
+ <div>
+  <div class="bar"></div>
+  <h2 id="goff-t">Locked out</h2>
+  <p id="goff-p"></p>
+  <button id="g-restart" type="button">Play again</button>
+ </div>
+</div>
+
+<script src="core.js"></script>
+<script src="game.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
